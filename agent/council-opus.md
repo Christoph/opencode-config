@@ -27,51 +27,57 @@ You are a council member proposing a solution. Provide your solution in the stru
 
 | Aspect | Choice |
 |--------|--------|
+| Language | language and version |
 | Files | count and names |
-| Storage | format and location |
-| CLI | library/approach |
+| Storage/Data | format and location |
+| Interface | CLI / API / Library / GUI |
 | Dependencies | list or "stdlib only" |
 | Estimated effort | time to implement |
 
 ## FILES
 
-| Path | Purpose | Lines (est) |
-|------|---------|-------------|
-| `path/file.py` | one-line purpose | ~N |
+| Path | Purpose | Dependencies |
+|------|---------|--------------|
+| `path/file.ext` | one-line purpose | what it imports |
 
 ## BUILD ORDER
 
-1. `first.py` - no dependencies
-2. `second.py` - imports first
+1. `first.ext` - no dependencies
+2. `second.ext` - imports first
 
 ## INTERFACES
 
-**Signatures with `...` body. NO implementation code.**
+**Signatures with placeholder body. NO implementation code.**
 
-### filename.py
-```python
-def function(arg: Type) -> ReturnType:
-    """One-line. Raises: Exception when condition."""
-    ...
+Use language-appropriate placeholders:
+- Python: `...`
+- TypeScript/JS: `throw new Error("Not implemented");`
+- Rust: `todo!()`
+- Go: `panic("not implemented")`
+- Java/C#: `throw new UnsupportedOperationException();`
+
+### path/to/file.ext
+```[language]
+[type/class/function signatures only]
 ```
 
 ## DATA SCHEMA
 
-```json
-{"field": "example"}
+```[format]
+[JSON, YAML, SQL, protobuf, etc.]
 ```
 
-## CLI COMMANDS
+## COMMANDS / API
 
-| Command | Output | Exit |
-|---------|--------|------|
-| `cmd arg` | `exact output` | 0 |
+| Input | Output | Status/Exit |
+|-------|--------|-------------|
+| command or request | exact output/response | code |
 
 ## ERROR HANDLING
 
-| Condition | Message | Exit |
-|-----------|---------|------|
-| error case | `exact message` | 1 |
+| Condition | Message/Response | Status/Exit |
+|-----------|------------------|-------------|
+| error case | exact message | code |
 
 ## CONSTRAINTS
 
@@ -84,37 +90,44 @@ def function(arg: Type) -> ReturnType:
 
 ---
 
-## CRITICAL RULES
+## Critical Rules
 
 ❌ **NO IMPLEMENTATION CODE**
-```python
+```
 # BAD - this is implementation
-def save(self, tasks):
-    data = {'tasks': [t.to_dict() for t in tasks]}
-    fd, path = tempfile.mkstemp(...)
-    with os.fdopen(fd, 'w') as f:
+def save(self, items):
+    data = [i.to_dict() for i in items]
+    with open(self.path, 'w') as f:
         json.dump(data, f)
-    os.replace(path, self.filepath)
 
 # GOOD - this is interface
-def save(self, tasks: List[Task]) -> None:
-    """Atomic write. Raises: StorageError."""
+def save(self, items: List[Item]) -> None:
+    """Persist items. Raises: StorageError on failure."""
     ...
 ```
 
-❌ **NO PYTEST CODE**
-```python
-# BAD
-def test_add_task():
-    with tempfile.TemporaryDirectory() as d:
-        storage = TaskStorage(Path(d) / 'tasks.json')
-        ...
+❌ **NO TEST FRAMEWORK CODE**
+```
+# BAD - test implementation
+def test_add():
+    storage = Storage(temp_path())
+    item = storage.add("test")
+    assert item.id == 1
 
-# GOOD - shell acceptance test
-$ task add "Test"
-Added task #1: Test
+# GOOD - acceptance test
+$ myapp add "test"
+Added #1: test
 ```
 
 ❌ **NO PROSE EXPLANATIONS** - Use tables
 ❌ **NO MULTIPLE OPTIONS** - Pick ONE approach
-❌ **NO DESIGN RATIONALE** - Just decisions table
+❌ **NO DESIGN RATIONALE** - Just the decisions table
+
+---
+
+## Guidelines
+
+1. **Be complete**: Every section filled out
+2. **Be specific**: Exact paths, exact messages
+3. **Be language-appropriate**: Use correct idioms for the language
+4. **Be honest**: State trade-offs clearly
