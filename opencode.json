@@ -1,0 +1,44 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "gruvbox",
+  "model": "anthropic/claude-sonnet-4-5",
+  "autoupdate": true,
+  "mcp": {
+    "treesitter-mcp": {
+      "type": "local",
+      "command": [
+        "/Users/christophmaier/Projects/treesitter-mcp/target/release/treesitter-mcp"
+      ],
+      "enabled": true
+    },
+  },
+  "formatter": {
+    "rustfmt": {
+      "command": [
+        "rustfmt",
+        "$FILE"
+      ],
+      "extensions": [
+        ".rs"
+      ],
+      "environment": {
+        "RUSTUP_TOOLCHAIN": "stable"
+      }
+    },
+  },
+  "permission": {
+    "bash": {
+      "git *": "deny",
+      "git": "deny",
+      "git diff": "allow",
+      "git diff --staged": "allow",
+      "git diff --cached": "allow",
+      "git status": "allow",
+      "git status --short": "allow",
+      "git log --oneline -n 10": "allow",
+      "git log --oneline -n *": "allow",
+      "git show *": "allow",
+      "*": "allow"
+    }
+  },
+}
