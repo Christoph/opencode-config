@@ -6,8 +6,8 @@ OpenCode configuration with safety plugins, specialized agents, and workflow com
 
 Custom agents for specialized workflows:
 
-- **council** - Multi-model coordinator that consults 5 AI models (Claude Haiku/Sonnet/Opus, GPT-4, Gemini) to compare solutions and synthesize implementation specs
-- **developer** - Expert coding assistant with AST-aware tools for reading, editing, and executing code changes
+- **council** - Multi-model coordinator that consults 5 AI models (Claude Haiku/Sonnet/Opus, GPT-5.1, Gemini) to compare solutions and synthesize implementation specs based on the idea from [Andrej Karpathy](https://github.com/karpathy/llm-council)
+- **developer** - Expert coding assistant with AST-aware tools ([treesitter-mcp](https://github.com/Christoph/treesitter-mcp)) for reading, editing, and executing code changes
 - **tester** - Testing specialist following Khorikov's principles for sustainable test design
 
 ## Commands

@@ -1,7 +1,7 @@
 ---
-description: Council agent (sonnet) - balanced
+description: Council agent (gpt) - structured
 mode: subagent
-model: anthropic/claude-sonnet-4-5
+model: openai/gpt-5.1
 temperature: 0.3
 tools:
   read: true
