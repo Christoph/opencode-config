@@ -7,7 +7,7 @@
     "treesitter-mcp": {
       "type": "local",
       "command": [
-        "/Users/christophmaier/Projects/treesitter-mcp/target/release/treesitter-mcp"
+        "path/to/treesitter-mcp"
       ],
       "enabled": true
     },
