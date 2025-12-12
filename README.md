@@ -4,6 +4,8 @@ OpenCode configuration with safety plugins, specialized agents, and workflow com
 
 ## Workflows
 
+Here are the most common workflows:
+
 - **Simple feature implementation**: `plan` agent → `use @code-monkey to write the plan to PLAN.md` → `/feature-implement` command
 - **Complex feature implementation**: `/plan` command → `/feature-implement` command
 - **Testing**: `/test-plan` command → `/test-implement` command → `/test-review` command
@@ -11,6 +13,9 @@ OpenCode configuration with safety plugins, specialized agents, and workflow com
 - **Code Documentation**: `/document` command 
 
 ## Agents
+
+All available agents:
+
 - Opencodes **build** agent for standard coding
 - Opencodes **plan** agent for standard planning tasks
 - **Council** agent for complex tasks using a multi-model coordinator that consults 5 AI models (Claude Haiku/Sonnet/Opus, GPT-5.1, Gemini) to compare solutions and synthesize implementation specs based on the idea from [Andrej Karpathy](https://github.com/karpathy/llm-council)
