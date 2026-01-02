@@ -1,7 +1,7 @@
 ---
 description: Reviewer agent (gpt) - peer review of solutions
 mode: subagent
-model: openai/gpt-5.1
+model: openai/gpt-5.2
 temperature: 0.3
 tools:
   read: true

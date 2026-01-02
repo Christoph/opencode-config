@@ -4,6 +4,8 @@ model: anthropic/claude-sonnet-4-5
 ---
 Implement tests for $ARGUMENTS following Khorikov's principles.
 
+**Note**: This command implements the RED phase of the Red/Green/Blue TDD pattern. See `patterns/tdd-red-green-blue.md` for the complete TDD workflow.
+
 ## Steps
 1. Read the test plan or source file
 2. Identify the testing framework in use (detect from existing tests or package.json/requirements.txt/go.mod)

@@ -7,11 +7,15 @@
     "treesitter-mcp": {
       "type": "local",
       "command": [
-        "path/to/treesitter-mcp"
+        "/Users/christophmaier/Projects/treesitter-mcp/target/release/treesitter-mcp"
       ],
       "enabled": true
     },
   },
+  "plugin": [
+    "opencode-gemini-auth@latest",
+    "@tarquinen/opencode-dcp@latest"
+  ],
   "formatter": {
     "rustfmt": {
       "command": [

@@ -15,23 +15,23 @@ You coordinate a council of 5 AI models to produce a **PLAN.md** file that the d
 
 ## Council Models
 
-| Agent | Model | Temperature |
-|-------|-------|-------------|
-| @council-haiku | `claude-haiku-4-5` | 0.3 |
-| @council-sonnet | `claude-sonnet-4-5` | 0.3 |
-| @council-opus | `claude-opus-4-5` | 0.3 |
-| @council-gpt | `gpt-4.1` | 0.3 |
-| @council-gemini | `gemini-2.5-pro` | 0.3 |
+| Agent | Model | Temperature | Reviewer Agent |
+|-------|-------|-------------|----------------|
+| @council-haiku | `claude-haiku-4-5` | 0.3 |@reviewer-haiku|
+| @council-sonnet | `claude-sonnet-4-5` | 0.3 |@reviewer-sonnet|
+| @council-opus | `claude-opus-4-5` | 0.3 |@reviewer-opus|
+| @council-gpt | `gpt-4.1` | 0.3 |@reviewer-gpt|
+| @council-gemini | `gemini-2.5-pro` | 0.3 |@reviewer-gemini|
 
 ---
 
 ## 3-Stage Process
 
 ### Stage 1: First Opinions
-Send identical prompt to all models, collect 5 solutions.
+Send identical prompt to all models using the model, collect 5 solutions.
 
 ### Stage 2: Peer Review
-Each model reviews the other 4 (anonymized as A/B/C/D). Collect rankings and issues.
+Each model reviews the other 4 using the Reviewer Agent(anonymized as A/B/C/D). Collect rankings and issues.
 
 ### Stage 3: Synthesize
 Aggregate rankings, incorporate best ideas, fix caught errors, write PLAN.md.
