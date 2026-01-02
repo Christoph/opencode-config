@@ -1,1 +1,4 @@
 .DS_Store
+plugin/bun.lock
+plugin/package.json
+plugin/tsconfig.json

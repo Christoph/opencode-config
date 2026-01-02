@@ -28,14 +28,6 @@ Create a clear, detailed problem statement with:
 ### 3. Consult Council (PARALLEL)
 Call all 5 council specialists simultaneously with identical problem statements:
 
-```
-Task(@council-creative, prompt="[problem statement]")
-Task(@council-analytical, prompt="[problem statement]")
-Task(@council-efficient, prompt="[problem statement]")
-Task(@council-openai, prompt="[problem statement]")
-Task(@council-gemini, prompt="[problem statement]")
-```
-
 **Important**: Make all 5 calls in a single message (parallel execution).
 
 ### 4. Analyze Responses
