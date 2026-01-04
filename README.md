@@ -6,7 +6,8 @@ OpenCode configuration with safety plugins, specialized agents, and workflow com
 
 Custom agents for specialized workflows:
 
-- **council** - Multi-model coordinator that consults 5 AI models (Claude Haiku/Sonnet/Opus, GPT-5.1, Gemini) to compare solutions and synthesize implementation specs based on the idea from [Andrej Karpathy](https://github.com/karpathy/llm-council)
+- **orchestrator** - Strategic planner and task coordinator that delegates specialized work to other agents. Manages todos, runs builds and tests, coordinates TDD workflows, and never implements code directly
+- **council** - Multi-model coordinator that consults 5 AI models in a 3-stage process (First Opinions → Peer Review → Synthesize) to produce PLAN.md specification files. Uses 5 variants: council-haiku (fast), council-sonnet (balanced), council-opus (deep reasoning), council-gpt (alternative perspective), and council-gemini (alternative perspective). Based on the idea from [Andrej Karpathy](https://github.com/karpathy/llm-council)
 - **developer** - Expert coding assistant with AST-aware tools ([treesitter-mcp](https://github.com/Christoph/treesitter-mcp)) for reading, editing, and executing code changes
 - **tester** - Testing specialist following Khorikov's principles for sustainable test design
 
