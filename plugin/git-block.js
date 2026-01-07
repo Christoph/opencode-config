@@ -1,34 +1,49 @@
+import { containsExecutable, extractPrimaryCommand } from './lib/command-parser.js';
+import { isGitCommandAllowed, ALLOWED_GIT_SUBCOMMANDS, SHELL_TOOL_NAMES } from './lib/security-patterns.js';
+
 export const GitBlocker = async ({ project, client, $, directory, worktree }) => {
   return {
-    // FIX 1: Add 'payload' as the second argument
     "tool.execute.before": async (input, payload) => {
       
-      // FIX 2: Check for standard shell tool names
-      const isShellTool = ["bash", "terminal", "shell"].includes(input.tool);
+      // Check for all shell tool name variations
+      const isShellTool = SHELL_TOOL_NAMES.includes(input.tool);
       
-      // FIX 3: Access arguments from 'payload' (with fallback)
-      const args = payload?.args || input?.args || {};
+      // Access arguments from payload with null safety
+      const args = payload?.args || {};
       const commandString = args.command || args.cmd || args.code;
 
       if (isShellTool && commandString) {
         const command = commandString.trim();
         
-        // Split command by spaces, pipes, and chain operators to find "git" anywhere
-        const parts = command.split(/[\s|&;]+/);
-        const gitIndex = parts.indexOf("git");
-
-        if (gitIndex !== -1) {
-          // Found 'git'. Now let's check what the NEXT word is (the subcommand)
-          const subcommand = parts[gitIndex + 1];
-
-          // Whitelist of allowed read-only commands
-          const allowedSubcommands = ["status", "log", "diff", "show", "branch"];
-
-          // If there is no subcommand (just "git") or it's not in the whitelist -> BLOCK
-          if (!subcommand || !allowedSubcommands.includes(subcommand)) {
-             throw new Error(
-               `[SECURITY BLOCK]: Destructive git operations are prohibited. Allowed: ${allowedSubcommands.join(", ")}. Blocked: "${commandString}"`
-             );
+        // Use robust parser to detect git (handles quotes, paths, subshells)
+        if (containsExecutable(command, ['git'])) {
+          
+          // Extract the primary git command and its arguments
+          const { executable, args: cmdArgs } = extractPrimaryCommand(command);
+          
+          // If the primary command is git, validate it
+          if (executable === 'git' && cmdArgs.length > 0) {
+            const subcommand = cmdArgs[0].replace(/^["'`]+|["'`]+$/g, ''); // Remove quotes
+            const subcommandArgs = cmdArgs.slice(1);
+            
+            // Check if subcommand and its flags are allowed
+            if (!isGitCommandAllowed(subcommand, subcommandArgs)) {
+              const allowedList = Object.keys(ALLOWED_GIT_SUBCOMMANDS).join(', ');
+              throw new Error(
+                `[SECURITY BLOCK]: Destructive git operations are prohibited. Allowed: ${allowedList}. Blocked: "${commandString}"`
+              );
+            }
+          } else if (executable === 'git') {
+            // Just "git" with no subcommand
+            throw new Error(
+              `[SECURITY BLOCK]: Git command requires a subcommand. Blocked: "${commandString}"`
+            );
+          } else {
+            // Git appears in the command but not as primary executable
+            // Could be in a subshell or pipe - block for safety
+            throw new Error(
+              `[SECURITY BLOCK]: Git command detected in complex shell expression. Blocked: "${commandString}"`
+            );
           }
         }
       }

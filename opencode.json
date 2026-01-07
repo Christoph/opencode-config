@@ -13,7 +13,6 @@
     },
   },
   "plugin": [
-    "opencode-gemini-auth@latest",
     "@tarquinen/opencode-dcp@latest"
   ],
   "formatter": {
